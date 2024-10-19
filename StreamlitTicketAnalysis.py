@@ -1,13 +1,14 @@
 import pandas as pd 
 from datetime import date
 import streamlit as st
-
+import seaborn as sns 
 import matplotlib.pyplot as plt 
 import numpy as np 
 #data = pd.read_excel('C:\\Users\\visse\\OneDrive - iorta TechNXT\\2024\\TIGB\OCT-2024\\11-OCT-2024\\TIGB_TICKET_STATUS_AGEWISE_AS_ON_10_OCT_24.xlsx')
 data = pd.read_csv('TIGB_TICKET_STATUS_AGEWISE.csv');
 print(data)
 data['Ticket ID'] = data['#']
+data.drop('#',axis=1,inplace=True)
 total = f"Total Number of Tickets Available:{len(data['Ticket ID'])}"
 st.markdown(f'## {total}')
 
@@ -35,6 +36,7 @@ data['Curr_date'] = date.today()
 # Convert the columns to datetime
 data['start_date'] = pd.to_datetime(data['Start date'])
 data['Curr_date'] =  pd.to_datetime(data['Curr_date'])
+print(data.info())
 #Calculate the difference in days
 data['Ticket_Age'] = (data['Curr_date'] - data['start_date']).dt.days 
 print(data['Ticket_Age'])
@@ -47,14 +49,31 @@ st.markdown(f'''
 ''', unsafe_allow_html=True) 
 st.sidebar.title('Query Ticket List based on Below Category')
 #data.drop('Age In Days',axis=1,inplace=True)
+#data['Start date'] = pd.to_datetime(data['start_date'],format='%d/%m/%Y',errors='coerce')
+#data['Start date'] = data.sort_values(by='Start date', ascending=True, inplace=True) 
 age = st.sidebar.selectbox('Age In Days',data['Ticket_Age'].unique())
 Name = st.sidebar.selectbox('Assignee',data['Assignee'].unique())
 Date1 = st.sidebar.selectbox('Start Date',data['start_date'].unique())
+#Date1 = st.sidebar.selectbox('Start Date',data.sort_values(by='Start date', ascending=True, inplace=True) )
 Date2 = st.sidebar.selectbox('Enddate',data['start_date'].unique())
+dates = pd.date_range(start='14/10/2024',end='29/09/2021',freq='D')
+
+mask = (data['start_date'] > Date1) & (data['start_date'] <= Date2)
+data = data.loc[mask]
+
+#dates = data['start_date'].agg(['min', 'max'])
+print('date1 =\n',Date1)
+print('date1 =\n',Date2)
+print('Dates =:\n',dates)
+print('type of start date:',type(data['start_date']))
  
 print('Age is:',age)
 #data = pd.DataFrame(data= ( (data[data['Ticket_Age'] >= age]) &  [data['Assignee'] == Name] 
-data =    data[((data['Ticket_Age'] >= age ) & ( data['Assignee'] == Name) )   & ((data['start_date'] > Date1) & (data['start_date'] <= Date2))]   
+#data =    data[(data['Ticket_Age'] >= age ) & (data['Assignee'] == Name) & ((data['Start date'] >= Date1) & (data['Start date'] <=Date2))] 
+
+print('Start date:\n',data['Start date'] )
+print('Date1 :',Date1)
+data =    data[((data['Ticket_Age'] >= age ) & ( data['Assignee'] == Name) )   & ((data['start_date'] > Date1) & (data['start_date'] <= Date2))]  
  
 #data = pd.DataFrame(data=data[data['Assignee'] == Name])
 #data = pd.concat([data_age, data_Name])
