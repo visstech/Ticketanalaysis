@@ -49,12 +49,12 @@ st.sidebar.title('Query Ticket List based on Below Category')
 #data.drop('Age In Days',axis=1,inplace=True)
 age = st.sidebar.selectbox('Age In Days',data['Ticket_Age'].unique())
 Name = st.sidebar.selectbox('Assignee',data['Assignee'].unique())
-Date1 = st.sidebar.selectbox('Start Date',data['Start date'].unique())
-Date2 = st.sidebar.selectbox('Enddate',data['Start date'].unique())
+Date1 = st.sidebar.selectbox('Start Date',data['start_date'].unique())
+Date2 = st.sidebar.selectbox('Enddate',data['start_date'].unique())
  
 print('Age is:',age)
 #data = pd.DataFrame(data= ( (data[data['Ticket_Age'] >= age]) &  [data['Assignee'] == Name] 
-data =    data[(data['Ticket_Age'] >= age ) & (data['Assignee'] == Name) & ((data['Start date'] >= Date1) & (data['Start date'] <=Date2))]  
+data =    data[((data['Ticket_Age'] >= age ) & ( data['Assignee'] == Name) )   & ((data['start_date'] > Date1) & (data['start_date'] <= Date2))]   
  
 #data = pd.DataFrame(data=data[data['Assignee'] == Name])
 #data = pd.concat([data_age, data_Name])
