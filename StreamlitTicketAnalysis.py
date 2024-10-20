@@ -6,7 +6,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt 
 import numpy as np 
 #data = pd.read_excel('C:\\Users\\visse\\OneDrive - iorta TechNXT\\2024\\TIGB\OCT-2024\\11-OCT-2024\\TIGB_TICKET_STATUS_AGEWISE_AS_ON_10_OCT_24.xlsx')
-data = pd.read_csv('C:\\ML\\TIGB_TICKET_STATUS_AGEWISE.csv');
+data = pd.read_csv('TIGB_TICKET_STATUS_AGEWISE.csv');
 print(data)
 color = st.sidebar.color_picker('Choose a background color', '#00f900')
 st.markdown(f'''
