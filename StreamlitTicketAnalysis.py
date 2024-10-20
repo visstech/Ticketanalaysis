@@ -30,6 +30,7 @@ print('values count after replace:\n',values_Count)
 #st.write(values_Count)
 tickets_total = pd.pivot_table(data=values_Count.fillna(0),values='counts',index='Status',columns='Assignee',aggfunc='sum')
 print('total tickets:\n',tickets_total.fillna(0))
+
 st.write(tickets_total.fillna(0))
 
 Olabels =  data['Status'].unique()
@@ -40,7 +41,7 @@ Osizes = []
 for i in Olabels:
   Osizes.append(len(data[data['Status'] == i ]))
 
-fig1, ax1 = plt.subplots()
+fig1, ax1 = plt.subplots(figsize=(12, 6))
         #ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
 ax1.pie(Osizes, labels=Olabels, autopct='%1.1f%%',
                 #shadow=True, startangle=90)
@@ -49,8 +50,13 @@ ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
 st.pyplot(fig1)
   
-calslist = pd.DataFrame(data=[Olabels,Osizes] ,columns=None,index=['Status','Count'])  
-st.write(calslist)
+#calslist = pd.DataFrame(data=[Olabels,Osizes] ,columns=Olabels,index=['Status','Count'])  
+calslist = pd.DataFrame(data=[Osizes] ,columns=Olabels,index=['Status']) 
+callist  = pd.DataFrame(data=calslist,index=None) 
+print('Call list columns are\n',callist.columns)
+st.markdown('### Total tickets count based on Stauts:')
+st.write(callist)
+
 data['Curr_date'] = date.today() 
 
 # Convert the columns to datetime
@@ -93,7 +99,7 @@ data =    data[((data['Ticket_Age'] >= age ) & ( data['Assignee'] == Name) )   &
 #data = pd.DataFrame(data=data[data['Assignee'] == Name])
 #data = pd.concat([data_age, data_Name])
 print(data) 
-st.markdown(f'### Status report for assignee = {Name}')
+st.markdown(f'### Tickets list under assignee = {Name}')
 st.write(data)
  
 print(data.columns) 
@@ -159,7 +165,7 @@ print('values of count is:',sizes)
     #print()
     #if len(sizes) > 1 :
         #explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
-fig1, ax1 = plt.subplots()
+fig1, ax1 = plt.subplots(figsize=(12,6))
         #ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
 ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
                 #shadow=True, startangle=90)
