@@ -12,7 +12,7 @@ data.drop('#',axis=1,inplace=True)
 total = f"Total Number of Tickets Available:{len(data['Ticket ID'])}"
 st.markdown(f'## {total}')
 
-values_Count = data.groupby(['Status','Assignee'])['Status'].count().reset_index(name='counts')
+values_Count = data.groupby(['Status','Assignee'])['Status'].count().reset_index(name='counts').sort_values(by='Assignee',ascending=True) 
 st.write(values_Count)
 
 Olabels =  data['Status'].unique()
