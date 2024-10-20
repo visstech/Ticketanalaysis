@@ -1,3 +1,4 @@
+
 import pandas as pd 
 from datetime import date
 import streamlit as st
@@ -5,15 +6,31 @@ import seaborn as sns
 import matplotlib.pyplot as plt 
 import numpy as np 
 #data = pd.read_excel('C:\\Users\\visse\\OneDrive - iorta TechNXT\\2024\\TIGB\OCT-2024\\11-OCT-2024\\TIGB_TICKET_STATUS_AGEWISE_AS_ON_10_OCT_24.xlsx')
-data = pd.read_csv('TIGB_TICKET_STATUS_AGEWISE.csv');
+data = pd.read_csv('C:\\ML\\TIGB_TICKET_STATUS_AGEWISE.csv');
 print(data)
+color = st.sidebar.color_picker('Choose a background color', '#00f900')
+st.markdown(f'''
+<div style='background-color: {color}; padding: 10px; border-radius: 5px;'>
+    <h1>Support ticket status analysis report </h1>     
+</div>
+''', unsafe_allow_html=True) 
 data['Ticket ID'] = data['#']
 data.drop('#',axis=1,inplace=True)
 total = f"Total Number of Tickets Available:{len(data['Ticket ID'])}"
 st.markdown(f'## {total}')
 
-values_Count = data.groupby(['Status','Assignee'])['Status'].count().reset_index(name='counts').sort_values(by='Assignee',ascending=True) 
-st.write(values_Count)
+#values_Count = data[['Status','Assignee']].value_counts()
+values_Count = data.groupby(['Status','Assignee'])['Status'].count().reset_index(name='counts').sort_values(by='Assignee',ascending=True)  
+values_Count = pd.DataFrame(data=values_Count,index=None)
+#print(values_Count.columns)
+#values_Count.reset_index(drop=True, inplace=True)
+
+values_Count = values_Count.replace(np.nan, 0)
+print('values count after replace:\n',values_Count) 
+#st.write(values_Count)
+tickets_total = pd.pivot_table(data=values_Count.fillna(0),values='counts',index='Status',columns='Assignee',aggfunc='sum')
+print('total tickets:\n',tickets_total.fillna(0))
+st.write(tickets_total.fillna(0))
 
 Olabels =  data['Status'].unique()
 Olabels = np.sort(Olabels)
@@ -44,12 +61,7 @@ print(data.info())
 data['Ticket_Age'] = (data['Curr_date'] - data['start_date']).dt.days 
 print(data['Ticket_Age'])
 
-color = st.sidebar.color_picker('Choose a background color', '#00f900')
-st.markdown(f'''
-<div style='background-color: {color}; padding: 10px; border-radius: 5px;'>
-    <h1>Support ticket status analysis report </h1>     
-</div>
-''', unsafe_allow_html=True) 
+
 st.sidebar.title('Query Ticket List based on Below Category')
 #data.drop('Age In Days',axis=1,inplace=True)
 #data['Start date'] = pd.to_datetime(data['start_date'],format='%d/%m/%Y',errors='coerce')
@@ -81,6 +93,7 @@ data =    data[((data['Ticket_Age'] >= age ) & ( data['Assignee'] == Name) )   &
 #data = pd.DataFrame(data=data[data['Assignee'] == Name])
 #data = pd.concat([data_age, data_Name])
 print(data) 
+st.markdown(f'### Status report for assignee = {Name}')
 st.write(data)
  
 print(data.columns) 
