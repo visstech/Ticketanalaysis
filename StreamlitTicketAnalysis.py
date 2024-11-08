@@ -60,7 +60,7 @@ st.write(callist)
 data['Curr_date'] = date.today() 
 
 # Convert the columns to datetime
-data['start_date'] = pd.to_datetime(data['Start date'])
+data['start_date'] = pd.to_datetime(data['Start date'],format="mixed", dayfirst=True)
 data['Curr_date'] =  pd.to_datetime(data['Curr_date'])
 print(data.info())
 #Calculate the difference in days
