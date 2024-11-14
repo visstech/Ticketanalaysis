@@ -176,7 +176,7 @@ st.pyplot(fig1)
 
 if st.sidebar.button('Show all tickets') :
     st.markdown('## All Tickets List ')    
-    all_data=all_data(index=False)
+   
     all_data['Ticket ID'] = all_data['Ticket ID'].astype(str)
     all_data['Ticket ID'] = all_data['Ticket ID'].str.replace(',', '', regex=False)
     all_data['Ticket ID'] = all_data['Ticket ID'].astype(int)
