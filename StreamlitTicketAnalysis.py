@@ -67,7 +67,7 @@ print(data.info())
 data['Ticket_Age'] = (data['Curr_date'] - data['start_date']).dt.days 
 print(data['Ticket_Age'])
 
-
+all_data = data
 st.sidebar.title('Query Ticket List based on Below Category')
 #data.drop('Age In Days',axis=1,inplace=True)
 #data['Start date'] = pd.to_datetime(data['start_date'],format='%d/%m/%Y',errors='coerce')
@@ -176,6 +176,6 @@ st.pyplot(fig1)
 
 if st.sidebar.button('Show all tickets') :
     st.markdown('## All Tickets List ')        
-    st.write(data)
+    st.write(all_data)
         
  
