@@ -175,7 +175,8 @@ ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 st.pyplot(fig1)
 
 if st.sidebar.button('Show all tickets') :
-    st.markdown('## All Tickets List ')        
+    st.markdown('## All Tickets List ')    
+    all_data['Ticket ID'] = all_data['Ticket ID'].str.replace(',', '')
     st.write(st.write(all_data[['Sr No','Ticket ID','Ticket_Age', 'Project', 'Tracker', 'Parent task', 'Parent task subject',
        'Status', 'Priority', 'Subject', 'Author', 'Assignee', 'Updated',
        'Category', 'Target version', 'Start date', 'Due date',
