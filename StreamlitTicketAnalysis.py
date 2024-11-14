@@ -173,5 +173,9 @@ ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
 ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
 st.pyplot(fig1)
+
+if st.sidebar.button('Show all tickets')
+    st.markdown('## All Tickets List ')        
+    st.write(data)
         
  
