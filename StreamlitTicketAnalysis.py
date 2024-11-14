@@ -176,6 +176,14 @@ st.pyplot(fig1)
 
 if st.sidebar.button('Show all tickets') :
     st.markdown('## All Tickets List ')        
-    st.write(all_data)
+    st.write(st.write(all_data[['Sr No','Ticket ID','Ticket_Age', 'Project', 'Tracker', 'Parent task', 'Parent task subject',
+       'Status', 'Priority', 'Subject', 'Author', 'Assignee', 'Updated',
+       'Category', 'Target version', 'Start date', 'Due date',
+       'Estimated time', 'Total estimated time', 'Spent time',
+       'Total spent time', '% Done', 'Created', 'Closed', 'Last updated by',
+       'Related issues', 'System', 'Original Requester', 'ISSD PIC',
+       'ISSD Remark', 'Root Cause', 'Resolved Date', 'Closed Date',
+       'Department', 'Remark'
+       ]]))
         
  
